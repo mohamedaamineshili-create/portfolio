@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohamed Amine Sehili — Filmmaker</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#080808;--surface:#111;--surface2:#161616;
+  --border:#222;--accent:#e8c97e;--accent2:#c8a84b;
+  --text:#f0ede8;--muted:#888880;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.2rem 3rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid transparent;transition:all .3s}
+nav.scrolled{background:rgba(8,8,8,.93);border-color:var(--border);backdrop-filter:blur(12px)}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.15em;color:var(--accent);text-decoration:none}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--accent);color:#000;padding:.5rem 1.4rem;font-size:.78rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:all .2s}
+.nav-cta:hover{background:var(--accent2)}
+
+/* HERO */
+.hero{min-height:100vh;position:relative;display:flex;align-items:center;overflow:hidden;padding:0 3rem}
+
+/* Full background image */
+.hero-img-bg{
+  position:absolute;
+  right:0;top:0;
+  width:60%;
+  height:100%;
+  z-index:0;
+}
+.hero-img-bg img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center top;
+  opacity:.55;
+  filter:brightness(.7) contrast(1.1);
+}
+/* gradient fade left */
+.hero-img-bg::before{
+  content:'';position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to right, var(--bg) 0%, rgba(8,8,8,.7) 40%, transparent 100%);
+}
+/* gradient fade bottom */
+.hero-img-bg::after{
+  content:'';position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top, var(--bg) 0%, transparent 40%);
+}
+
+/* gold glow behind image */
+.hero-glow{
+  position:absolute;
+  right:15%;top:50%;
+  transform:translateY(-50%);
+  width:500px;height:500px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(232,201,126,.18) 0%, transparent 70%);
+  z-index:1;
+  pointer-events:none;
+}
+
+.hero-content{
+  position:relative;z-index:2;
+  max-width:580px;
+  animation:fadeUp .9s ease both;
+}
+.hero-tag{display:inline-flex;align-items:center;gap:.6rem;font-family:'Space Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:2rem;opacity:.9}
+.hero-tag::before{content:'';width:2rem;height:1px;background:var(--accent)}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4.5rem,8vw,8rem);line-height:.92;letter-spacing:.02em;margin-bottom:1.5rem}
+.hero-title em{font-style:normal;color:var(--accent)}
+.hero-title .line2{color:var(--muted);font-size:clamp(3rem,5.5vw,5.5rem)}
+.hero-sub{font-size:1.05rem;color:var(--muted);font-weight:300;max-width:440px;margin-bottom:.8rem;line-height:1.75}
+.hero-sub strong{color:var(--text);font-weight:400}
+.hero-name-line{font-size:.88rem;color:var(--muted);margin-bottom:2.2rem;font-weight:300}
+.hero-name-line strong{color:var(--text);font-weight:400}
+.hero-btns{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.btn-primary{background:var(--accent);color:#000;padding:.85rem 2rem;font-weight:500;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:all .2s;display:inline-block}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-1px)}
+.btn-ghost{border:1px solid rgba(255,255,255,.2);color:var(--muted);padding:.85rem 2rem;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:all .2s;display:inline-block}
+.btn-ghost:hover{border-color:var(--muted);color:var(--text)}
+
+.hero-scroll{position:absolute;bottom:2.5rem;left:3rem;display:flex;align-items:center;gap:.8rem;color:var(--muted);font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;font-family:'Space Mono',monospace;z-index:3;animation:bounce 2.2s ease-in-out infinite}
+.hero-scroll::after{content:'';width:2rem;height:1px;background:var(--border)}
+
+/* TICKER */
+.ticker{background:var(--accent);padding:.6rem 0;overflow:hidden;white-space:nowrap}
+.ticker-inner{display:inline-flex;gap:3rem;animation:ticker 22s linear infinite}
+.ticker-item{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.12em;color:#000}
+.ticker-dot{color:#000;opacity:.4}
+
+section{padding:6rem 3rem}
+.section-label{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:.8rem}
+.section-label::before{content:'0' attr(data-n) '—';opacity:.6}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4rem);line-height:1;margin-bottom:1rem;letter-spacing:.02em}
+.divider{width:3rem;height:1px;background:var(--accent);margin-bottom:3rem;opacity:.6}
+
+.about-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:5rem;align-items:start}
+.about-intro{font-size:1.1rem;color:var(--text);font-weight:300;line-height:1.85;margin-bottom:1.8rem}
+.about-intro strong{color:var(--accent);font-weight:400}
+.about-quote{border-left:2px solid var(--accent);padding:1rem 1.5rem;margin:2rem 0;font-style:italic;color:var(--text);font-size:1rem;line-height:1.75;background:rgba(232,201,126,.04)}
+.about-services{margin-top:2rem}
+.about-services-title{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1rem}
+.services-row{display:flex;gap:.6rem;flex-wrap:wrap}
+.service-pill{border:1px solid var(--border);color:var(--muted);font-size:.75rem;padding:.35rem .9rem;letter-spacing:.06em;text-transform:uppercase;transition:all .2s;cursor:default}
+.service-pill:hover{border-color:var(--accent);color:var(--accent)}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-bottom:1px}
+.stat-block{background:var(--bg);padding:2rem 1.5rem;transition:background .2s}
+.stat-block:hover{background:var(--surface)}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:3.8rem;color:var(--accent);line-height:1}
+.stat-label{color:var(--muted);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-top:.4rem}
+.xp-bar{background:var(--surface);border:1px solid var(--border);padding:1.8rem;margin-top:1px}
+.xp-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
+.xp-name{font-size:.82rem;color:var(--muted)}
+.xp-years{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--accent)}
+.xp-track{height:1px;background:var(--border);margin:.4rem 0 0;position:relative}
+.xp-fill{height:1px;background:var(--accent);position:absolute;top:0;left:0}
+
+.filter-tabs{display:flex;gap:.5rem;margin-bottom:3rem;flex-wrap:wrap}
+.tab{background:none;border:1px solid var(--border);color:var(--muted);padding:.5rem 1.2rem;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.tab.active,.tab:hover{background:var(--accent);color:#000;border-color:var(--accent)}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.project-card{background:var(--bg);overflow:hidden;position:relative;cursor:pointer;aspect-ratio:4/3;display:flex;align-items:flex-end}
+.project-thumb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.project-thumb-inner{width:100%;height:100%;transition:transform .5s ease;display:flex;align-items:center;justify-content:center}
+.project-card:hover .project-thumb-inner{transform:scale(1.05)}
+.project-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.2) 50%,transparent 100%);opacity:0;transition:opacity .3s}
+.project-card:hover .project-overlay{opacity:1}
+.project-info{position:relative;z-index:2;padding:1.2rem;transform:translateY(8px);opacity:0;transition:all .3s}
+.project-card:hover .project-info{transform:translateY(0);opacity:1}
+.project-type{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
+.project-name{font-weight:500;font-size:.92rem}
+.play-icon{width:44px;height:44px;border:1.5px solid rgba(255,255,255,.35);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.project-card:hover .play-icon{border-color:var(--accent);background:rgba(232,201,126,.1)}
+.play-icon::after{content:'';width:0;height:0;border-style:solid;border-width:7px 0 7px 14px;border-color:transparent transparent transparent rgba(255,255,255,.7);margin-left:3px}
+.project-card:hover .play-icon::after{border-color:transparent transparent transparent var(--accent)}
+
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.testi-card{background:var(--surface);border:1px solid var(--border);padding:2rem;transition:border-color .3s}
+.testi-card:hover{border-color:var(--accent)}
+.testi-mark{font-family:'Bebas Neue',sans-serif;font-size:4rem;color:var(--accent);opacity:.2;line-height:.8;margin-bottom:.5rem}
+.testi-text{color:var(--muted);font-size:.9rem;font-weight:300;line-height:1.8;margin-bottom:1.5rem;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:.8rem;padding-top:1rem;border-top:1px solid var(--border)}
+.testi-avatar{width:36px;height:36px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:500;color:var(--accent);flex-shrink:0}
+.testi-name{font-size:.85rem;font-weight:500}
+.testi-role{font-size:.72rem;color:var(--muted)}
+
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.big-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,5rem);line-height:.95;margin-bottom:1.5rem;letter-spacing:.02em}
+.big-text em{font-style:normal;color:var(--accent)}
+.contact-desc{color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:2.5rem;font-size:.95rem}
+.contact-links{display:flex;flex-direction:column;gap:.8rem}
+.contact-link{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.4rem;background:var(--surface);border:1px solid var(--border);text-decoration:none;transition:all .2s}
+.contact-link:hover{border-color:var(--accent);background:var(--surface2)}
+.contact-link-icon{font-size:1rem;flex-shrink:0;width:20px;text-align:center}
+.contact-link-text{flex:1}
+.contact-link-label{font-size:.68rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.contact-link-val{font-size:.85rem;color:var(--text);margin-top:.1rem}
+.contact-link-arrow{color:var(--muted);font-size:.85rem;transition:transform .2s}
+.contact-link:hover .contact-link-arrow{transform:translate(3px,-3px);color:var(--accent)}
+.social-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem}
+.social-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem 1rem;border:1px solid var(--border);color:var(--muted);text-decoration:none;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;transition:all .2s}
+.social-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.15em;color:var(--accent)}
+.footer-copy{color:var(--muted);font-size:.75rem}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .hero{padding:0 1.5rem}
+  .hero-img-bg{width:100%;opacity:.3}
+  section{padding:4rem 1.5rem}
+  .about-grid,.contact-inner{grid-template-columns:1fr;gap:3rem}
+  .projects-grid{grid-template-columns:repeat(2,1fr)}
+  .testimonials-grid{grid-template-columns:1fr}
+}
+@media(max-width:580px){
+  .projects-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#top" class="nav-logo">MAS</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#montage">Editing</a></li>
+    <li><a href="#photo">Shooting</a></li>
+    <li><a href="#testi">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Let's work together</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <!-- Background image right side -->
+  <div class="hero-img-bg">
+    <img src="https://raw.githubusercontent.com/mohamedaamineshili-create/portfolio/main/hero_photo.jpg" alt="Mohamed Amine Sehili">
+  </div>
+  <!-- Gold glow -->
+  <div class="hero-glow"></div>
+
+  <!-- Content left -->
+  <div class="hero-content">
+    <div class="hero-tag">Filmmaker · Tunisia</div>
+    <h1 class="hero-title">
+      Mohamed<br>
+      <em>Amine</em><br>
+      <span class="line2">Sehili</span>
+    </h1>
+    <p class="hero-sub">Editing · Shooting · Scriptwriting — turning raw moments into <strong>cinematic stories</strong> that stay with you.</p>
+    <div class="hero-btns">
+      <a href="#montage" class="btn-primary">See my work</a>
+      <a href="#contact" class="btn-ghost">Get in touch</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">Video Editing</span><span class="ticker-dot">●</span>
+    <span class="ticker-item">Cinematography</span><span class="ticker-dot">●</span>
+    <span class="ticker-item">Scriptwriting</span><span class="ticker-dot">●</span>
+    <span class="ticker-item">Color Grading</span><span class="ticker-dot">●</span>
+    <span class="ticker-item">Storyboarding</span><span class="ticker-dot">●</span>
+    <span class="ticker-item">Storytelling</span><span class="ticker-dot">●</span>
+    <span class="ticker-item">Video Editing</span><span class="ticker-dot">●</span>
+    <span class="ticker-item">Cinematography</span><span class="ticker-dot">●</span>
+    <span class="ticker-item">Scriptwriting</span><span class="ticker-dot">●</span>
+    <span class="ticker-item">Color Grading</span><span class="ticker-dot">●</span>
+    <span class="ticker-item">Storyboarding</span><span class="ticker-dot">●</span>
+    <span class="ticker-item">Storytelling</span><span class="ticker-dot">●</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label" data-n="1">About</div>
+  <div class="divider"></div>
+  <div class="about-grid">
+    <div>
+      <h2 class="section-title">I tell stories<br>through the<br><em style="font-style:normal;color:var(--accent)">lens.</em></h2>
+      <p class="about-intro">I'm <strong>Mohamed Amine Sehili</strong>, a Tunisian filmmaker with <strong>8 years in editing</strong> and <strong>3 years in shooting and scriptwriting</strong>. I don't just capture moments — I build visual narratives that feel alive.</p>
+      <p style="color:var(--muted);font-weight:300;line-height:1.85;font-size:.97rem;margin-bottom:1.5rem">From writing the first line of a script to the final color grade, I handle every stage of the creative process — so your story is told exactly the way it deserves to be.</p>
+      <blockquote class="about-quote">"Let's work together and tell whatever you want — with a cinematic story."</blockquote>
+      <div class="about-services">
+        <div class="about-services-title">What I do</div>
+        <div class="services-row">
+          <span class="service-pill">Video Editing</span>
+          <span class="service-pill">Shooting</span>
+          <span class="service-pill">Scriptwriting</span>
+          <span class="service-pill">Storyboarding</span>
+          <span class="service-pill">Color Grading</span>
+          <span class="service-pill">Motion Graphics</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="stats-grid">
+        <div class="stat-block"><div class="stat-num">8</div><div class="stat-label">Years in editing</div></div>
+        <div class="stat-block"><div class="stat-num">3</div><div class="stat-label">Years shooting</div></div>
+        <div class="stat-block"><div class="stat-num">50+</div><div class="stat-label">Projects done</div></div>
+        <div class="stat-block"><div class="stat-num">∞</div><div class="stat-label">Stories to tell</div></div>
+      </div>
+      <div class="xp-bar">
+        <div style="font-family:'Space Mono',monospace;font-size:.65rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.2rem">Expertise level</div>
+        <div class="xp-row"><span class="xp-name">Video Editing</span><span class="xp-years">8 yrs</span></div>
+        <div class="xp-track"><div class="xp-fill" style="width:95%"></div></div>
+        <div style="height:1rem"></div>
+        <div class="xp-row"><span class="xp-name">Cinematography</span><span class="xp-years">3 yrs</span></div>
+        <div class="xp-track"><div class="xp-fill" style="width:70%"></div></div>
+        <div style="height:1rem"></div>
+        <div class="xp-row"><span class="xp-name">Scriptwriting</span><span class="xp-years">3 yrs</span></div>
+        <div class="xp-track"><div class="xp-fill" style="width:65%"></div></div>
+        <div style="height:1rem"></div>
+        <div class="xp-row"><span class="xp-name">Color Grading</span><span class="xp-years">6 yrs</span></div>
+        <div class="xp-track"><div class="xp-fill" style="width:85%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MONTAGE -->
+<section id="montage" style="padding-top:2rem">
+  <div class="section-label" data-n="2">Video Editing</div>
+  <h2 class="section-title">My <em style="font-style:normal;color:var(--accent)">edits</em></h2>
+  <div class="divider"></div>
+  <div class="filter-tabs">
+    <button class="tab active" onclick="filterGrid(event,'all','mg')">All</button>
+    <button class="tab" onclick="filterGrid(event,'clip','mg')">Clips</button>
+    <button class="tab" onclick="filterGrid(event,'corporate','mg')">Corporate</button>
+    <button class="tab" onclick="filterGrid(event,'event','mg')">Events</button>
+  </div>
+  <div class="projects-grid" id="mg-grid"></div>
+</section>
+
+<!-- PHOTO -->
+<section id="photo" style="padding-top:2rem">
+  <div class="section-label" data-n="3">Cinematography</div>
+  <h2 class="section-title">My <em style="font-style:normal;color:var(--accent)">shots</em></h2>
+  <div class="divider"></div>
+  <div class="filter-tabs">
+    <button class="tab active" onclick="filterGrid(event,'all','ph')">All</button>
+    <button class="tab" onclick="filterGrid(event,'portrait','ph')">Portrait</button>
+    <button class="tab" onclick="filterGrid(event,'corporate','ph')">Corporate</button>
+    <button class="tab" onclick="filterGrid(event,'event','ph')">Events</button>
+  </div>
+  <div class="projects-grid" id="ph-grid"></div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testi">
+  <div class="section-label" data-n="4">Reviews</div>
+  <h2 class="section-title">What they <em style="font-style:normal;color:var(--accent)">say</em></h2>
+  <div class="divider"></div>
+  <div class="testimonials-grid">
+    <div class="testi-card">
+      <div class="testi-mark">"</div>
+      <p class="testi-text">Amine captured exactly the atmosphere we wanted. The final edit was beyond our expectations — professional, well-paced, and genuinely moving.</p>
+      <div class="testi-author"><div class="testi-avatar">AK</div><div><div class="testi-name">Ahmed K.</div><div class="testi-role">Creative Director</div></div></div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-mark">"</div>
+      <p class="testi-text">The photos from our corporate event were perfect. Amine is discreet, fast, and delivers high-quality work every time. We'll definitely work with him again.</p>
+      <div class="testi-author"><div class="testi-avatar">SB</div><div><div class="testi-name">Sarah B.</div><div class="testi-role">Marketing Manager</div></div></div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-mark">"</div>
+      <p class="testi-text">Clean work, smooth communication, deadlines respected. The result exceeded what we imagined. I recommend Amine to everyone I know.</p>
+      <div class="testi-author"><div class="testi-avatar">YM</div><div><div class="testi-name">Yassine M.</div><div class="testi-role">Entrepreneur</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label" data-n="5">Contact</div>
+  <div class="divider"></div>
+  <div class="contact-inner">
+    <div>
+      <h2 class="big-text">A story<br>to <em>tell</em>?<br>Let's talk.</h2>
+      <p class="contact-desc">Available for short-term missions, ongoing collaborations, and long-term projects — in Tunisia and remotely worldwide.</p>
+    </div>
+    <div>
+      <div class="contact-links">
+        <a href="mailto:mohamedaamine@gmail.com" class="contact-link">
+          <span class="contact-link-icon">✉</span>
+          <div class="contact-link-text"><div class="contact-link-label">Email</div><div class="contact-link-val">mohamedaamine@gmail.com</div></div>
+          <span class="contact-link-arrow">↗</span>
+        </a>
+        <a href="https://wa.me/21652450519" class="contact-link">
+          <span class="contact-link-icon">📱</span>
+          <div class="contact-link-text"><div class="contact-link-label">WhatsApp</div><div class="contact-link-val">+216 52 450 519</div></div>
+          <span class="contact-link-arrow">↗</span>
+        </a>
+      </div>
+      <div class="social-row">
+        <a href="https://instagram.com/mohamed.amine.sehili" class="social-btn">Instagram</a>
+        <a href="https://youtube.com/@Mohamed.AmineSehili" class="social-btn">YouTube</a>
+        <a href="https://www.linkedin.com/in/mohamed-amine-shili" class="social-btn">LinkedIn</a>
+        <a href="https://www.tiktok.com/@mohamedamine.sehili" class="social-btn">TikTok</a>
+        <a href="https://www.facebook.com/MedAmineShili0" class="social-btn">Facebook</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">MAS</span>
+  <span class="footer-copy">© 2026 Mohamed Amine Sehili — All rights reserved</span>
+</footer>
+
+<script>
+const mgData=[
+  {type:'clip',tag:'Music Clip',name:'Music Video Edit',g:'linear-gradient(135deg,#0a0a18,#1a1030)'},
+  {type:'corporate',tag:'Corporate',name:'Brand Film',g:'linear-gradient(135deg,#0d0d15,#1a1520)'},
+  {type:'event',tag:'Event',name:'Wedding Highlight',g:'linear-gradient(135deg,#100a08,#201510)'},
+  {type:'clip',tag:'Clip',name:'Short Film Cut',g:'linear-gradient(135deg,#080d10,#101820)'},
+  {type:'corporate',tag:'Social Media',name:'Ad Campaign Edit',g:'linear-gradient(135deg,#0a0d08,#141808)'},
+  {type:'event',tag:'Event',name:'Conference Recap',g:'linear-gradient(135deg,#0d0a00,#1c1500)'},
+];
+const phData=[
+  {type:'portrait',tag:'Portrait',name:'Studio Session',g:'linear-gradient(135deg,#0c0c0c,#181818)'},
+  {type:'corporate',tag:'Corporate',name:'Team Photography',g:'linear-gradient(135deg,#080a0c,#101418)'},
+  {type:'event',tag:'Event',name:'Gala Evening',g:'linear-gradient(135deg,#0c0808,#180e0e)'},
+  {type:'portrait',tag:'Portrait',name:'Editorial Shoot',g:'linear-gradient(135deg,#080c08,#0e1a0e)'},
+  {type:'corporate',tag:'Product',name:'Product Photography',g:'linear-gradient(135deg,#0a080c,#160e1c)'},
+  {type:'event',tag:'Event',name:'Cultural Festival',g:'linear-gradient(135deg,#0c0a08,#1c1410)'},
+];
+
+function buildCard(p,isVid){
+  const d=document.createElement('div');
+  d.className='project-card';d.dataset.type=p.type;
+  d.innerHTML=`<div class="project-thumb"><div class="project-thumb-inner" style="background:${p.g}">${
+    isVid?'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%"><div class="play-icon"></div></div>'
+    :'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:Space Mono,monospace;font-size:.62rem;color:rgba(232,201,126,.2);letter-spacing:.1em">PHOTO</div>'
+  }</div></div>
+  <div class="project-overlay"></div>
+  <div class="project-info"><div class="project-type">${p.tag}</div><div class="project-name">${p.name}</div></div>`;
+  return d;
+}
+
+function renderGrid(data,id,isVid){
+  const g=document.getElementById(id);g.innerHTML='';
+  data.forEach(p=>g.appendChild(buildCard(p,isVid)));
+}
+
+function filterGrid(e,type,prefix){
+  const data=prefix==='mg'?mgData:phData;
+  const isVid=prefix==='mg';
+  const filtered=type==='all'?data:data.filter(p=>p.type===type);
+  renderGrid(filtered,prefix+'-grid',isVid);
+  document.querySelectorAll(`#${prefix==='mg'?'montage':'photo'} .tab`).forEach(t=>t.classList.remove('active'));
+  e.target.classList.add('active');
+}
+
+renderGrid(mgData,'mg-grid',true);
+renderGrid(phData,'ph-grid',false);
+
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',scrollY>60);
+});
+</script>
+</body>
+</html>
