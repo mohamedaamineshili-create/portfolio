@@ -131,6 +131,14 @@ section{padding:6rem 3rem}
 .play-icon::after{content:'';width:0;height:0;border-style:solid;border-width:7px 0 7px 14px;border-color:transparent transparent transparent rgba(255,255,255,.7);margin-left:3px}
 .project-card:hover .play-icon::after{border-color:transparent transparent transparent var(--accent)}
 
+/* Instagram embed cards */
+.insta-card{aspect-ratio:unset!important;min-height:480px}
+.insta-embed-wrap{position:absolute;inset:0;overflow:hidden;background:#000}
+.insta-embed-wrap iframe{width:100%;height:100%;border:none;pointer-events:none}
+.insta-card:hover .insta-embed-wrap iframe{pointer-events:auto}
+.insta-card .project-info{position:absolute;bottom:0;left:0;right:0;z-index:5;padding:1.2rem;background:linear-gradient(to top,rgba(0,0,0,.85),transparent);transform:translateY(4px);opacity:0;transition:all .3s}
+.insta-card:hover .project-info{transform:translateY(0);opacity:1}
+
 .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
 .testi-card{background:var(--surface);border:1px solid var(--border);padding:2rem;transition:border-color .3s}
 .testi-card:hover{border-color:var(--accent)}
@@ -379,9 +387,9 @@ footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;justify
 
 <script>
 const mgData=[
-  {type:'clip',tag:'Music Clip',name:'Music Video Edit',g:'linear-gradient(135deg,#0a0a18,#1a1030)'},
-  {type:'corporate',tag:'Corporate',name:'Brand Film',g:'linear-gradient(135deg,#0d0d15,#1a1520)'},
-  {type:'event',tag:'Event',name:'Wedding Highlight',g:'linear-gradient(135deg,#100a08,#201510)'},
+  {type:'clip',tag:'Music Clip',name:'Music Video Edit',insta:'https://www.instagram.com/p/DIo54bZMTt-/embed/'},
+  {type:'corporate',tag:'Corporate',name:'Brand Film',insta:'https://www.instagram.com/p/DPj3B3PDu6V/embed/'},
+  {type:'event',tag:'Event',name:'Wedding Highlight',insta:'https://www.instagram.com/p/DTc8cFMk4mB/embed/'},
   {type:'clip',tag:'Clip',name:'Short Film Cut',g:'linear-gradient(135deg,#080d10,#101820)'},
   {type:'corporate',tag:'Social Media',name:'Ad Campaign Edit',g:'linear-gradient(135deg,#0a0d08,#141808)'},
   {type:'event',tag:'Event',name:'Conference Recap',g:'linear-gradient(135deg,#0d0a00,#1c1500)'},
@@ -398,12 +406,22 @@ const phData=[
 function buildCard(p,isVid){
   const d=document.createElement('div');
   d.className='project-card';d.dataset.type=p.type;
-  d.innerHTML=`<div class="project-thumb"><div class="project-thumb-inner" style="background:${p.g}">${
-    isVid?'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%"><div class="play-icon"></div></div>'
-    :'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:Space Mono,monospace;font-size:.62rem;color:rgba(224,48,48,.2);letter-spacing:.1em">PHOTO</div>'
-  }</div></div>
-  <div class="project-overlay"></div>
-  <div class="project-info"><div class="project-type">${p.tag}</div><div class="project-name">${p.name}</div></div>`;
+  if(p.insta){
+    d.classList.add('insta-card');
+    d.innerHTML=`
+      <div class="insta-embed-wrap">
+        <iframe src="${p.insta}" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen="true"></iframe>
+      </div>
+      <div class="project-overlay"></div>
+      <div class="project-info"><div class="project-type">${p.tag}</div><div class="project-name">${p.name}</div></div>`;
+  } else {
+    d.innerHTML=`<div class="project-thumb"><div class="project-thumb-inner" style="background:${p.g}">${
+      isVid?'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%"><div class="play-icon"></div></div>'
+      :'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:Space Mono,monospace;font-size:.62rem;color:rgba(224,48,48,.2);letter-spacing:.1em">PHOTO</div>'
+    }</div></div>
+    <div class="project-overlay"></div>
+    <div class="project-info"><div class="project-type">${p.tag}</div><div class="project-name">${p.name}</div></div>`;
+  }
   return d;
 }
 
