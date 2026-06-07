@@ -447,6 +447,7 @@ const ccProjects=[
     tags:['Concept','Script','Shoot','Edit'],
     desc:'A cinematic storytelling reel inspired by Fight Club — full production from concept to post. This is the kind of content I create for brands that want to trigger emotion and drive engagement.',
     videoUrl:'https://www.instagram.com/reel/DFx-pI2Idc9/',
+    thumb:'https://raw.githubusercontent.com/mohamedaamineshili-create/portfolio/main/fightclubthumbnail.png',
     bts:['https://raw.githubusercontent.com/mohamedaamineshili-create/portfolio/main/1000299269.jpg'],
   },
 ];
@@ -456,10 +457,10 @@ function buildCCCard(p){
   d.className='cc-card';
   d.innerHTML=`
     <div class="cc-card-inner">
-      <div class="cc-card-preview" onclick="window.open('${p.videoUrl}','_blank')">
+      <div class="cc-card-preview" onclick="window.open('${p.videoUrl}','_blank')" style="${p.thumb ? 'background:url('+p.thumb+') center/cover no-repeat' : ''}">
+        <div class="cc-card-overlay-gradient"></div>
         <div class="cc-play-wrap"><div class="cc-play-icon"></div></div>
         <div class="cc-platform-badge">${p.platformIcon}</div>
-        <div class="cc-card-overlay-gradient"></div>
       </div>
       <div class="cc-card-body">
         <div class="cc-card-tags">${p.tags.map(t=>'<span class="cc-tag">'+t+'</span>').join('')}</div>
