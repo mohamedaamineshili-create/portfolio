@@ -645,6 +645,7 @@ const mgData=[
   {type:'clip',tag:'Clip',name:'Short Film Cut',g:'linear-gradient(135deg,#080d10,#101820)'},
   {type:'corporate',tag:'Social Media',name:'Ad Campaign Edit',g:'linear-gradient(135deg,#0a0d08,#141808)'},
   {type:'event',tag:'Event',name:'Conference Recap',g:'linear-gradient(135deg,#0d0a00,#1c1500)'},
+  {type:'event',tag:'Wedding',name:"Jihene & Bernhard's Wedding",yt:'https://www.youtube.com/watch?v=C9DaFTLGtLw',thumb:'https://img.youtube.com/vi/C9DaFTLGtLw/maxresdefault.jpg'},
 ];
 const phData=[
   {type:'portrait',tag:'Portrait',name:'Studio Session',g:'linear-gradient(135deg,#0c0c0c,#181818)'},
@@ -672,6 +673,22 @@ function buildCard(p,isVid){
       <div class="project-overlay"></div>
       <div class="project-info"><div class="project-type">${p.tag}</div><div class="project-name">${p.name}</div></div>`;
     d.addEventListener('click',()=>openModal(p.insta,p.name));
+  } else if(p.yt){
+    d.classList.add('insta-card');
+    const bgStyle = p.thumb
+      ? `background:url('${p.thumb}') center/cover no-repeat`
+      : `background:linear-gradient(135deg,#0a0a0a,#1a1010)`;
+    const ytId = p.yt.split('v=')[1] || p.yt.split('/').pop();
+    const embedUrl = 'https://www.youtube.com/embed/' + ytId + '?autoplay=1';
+    d.innerHTML=`
+      <div class="insta-card-bg" style="${bgStyle}">
+        <div class="insta-card-overlay"></div>
+        <div class="insta-play-btn"></div>
+        <div class="insta-label" style="background:rgba(255,0,0,.85)">YouTube</div>
+      </div>
+      <div class="project-overlay"></div>
+      <div class="project-info"><div class="project-type">${p.tag}</div><div class="project-name">${p.name}</div></div>`;
+    d.addEventListener('click',()=>openYTModal(embedUrl,p.yt,p.name));
   } else {
     d.innerHTML=`<div class="project-thumb"><div class="project-thumb-inner" style="background:${p.g}">${
       isVid?'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%"><div class="play-icon"></div></div>'
@@ -687,6 +704,14 @@ function openModal(url,name){
   const m=document.getElementById('videoModal');
   document.getElementById('modalIframe').src=url+'embed/';
   document.getElementById('modalLink').href=url;
+  document.getElementById('modalTitle').textContent=name;
+  m.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function openYTModal(embedUrl,ytUrl,name){
+  const m=document.getElementById('videoModal');
+  document.getElementById('modalIframe').src=embedUrl;
+  document.getElementById('modalLink').href=ytUrl;
   document.getElementById('modalTitle').textContent=name;
   m.classList.add('open');
   document.body.style.overflow='hidden';
